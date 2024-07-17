@@ -1,4 +1,4 @@
-package ac.su.ctctct.Controller;
+package ac.su.ctctct.controller;
 
 import ac.su.ctctct.domain.ChatMessage;
 import lombok.RequiredArgsConstructor;
