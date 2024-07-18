@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 public class ChatMessage {
 
     private Long id;
+    private Long senderId; // 추가된 필드
     private String name;
     private String message;
 
-    public ChatMessage(Long id, String name, String message) {
+    public ChatMessage(Long id, Long senderId, String name, String message) {
         this.id = id;
+        this.senderId = senderId;
         this.name = name;
         this.message = message;
     }
