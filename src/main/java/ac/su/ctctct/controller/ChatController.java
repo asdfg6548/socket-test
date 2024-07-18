@@ -1,6 +1,8 @@
 package ac.su.ctctct.controller;
 
+import ac.su.ctctct.domain.Chat;
 import ac.su.ctctct.domain.ChatMessage;
+import ac.su.ctctct.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,19 +20,27 @@ public class ChatController {
 
     private final SimpMessageSendingOperations template;
 
+    private final ChatService chatService;
+
     // 채팅 리스트 반환
-    @GetMapping("/chat/{id}")
-    public ResponseEntity<List<ChatMessage>> getChatMessages(@PathVariable Long id){
-    	//임시로 리스트 형식으로 구현, 실제론 DB 접근 필요
-        ChatMessage test = new ChatMessage(1L, "test", "test");
-        return ResponseEntity.ok().body(List.of(test));
+    @GetMapping("/chat/{roomNum}")
+    public ResponseEntity<List<Chat>> getChatMessages(@PathVariable Long roomNum){
+        List<Chat> chatMessages = chatService.getChatMessagesByRoomNum(roomNum);
+        return ResponseEntity.ok().body(chatMessages);
     }
 
-    //메시지 송신 및 수신, /pub가 생략된 모습. 클라이언트 단에선 /pub/message로 요청
+    // 메시지 송신 및 수신, /pub가 생략된 모습. 클라이언트 단에선 /pub/message로 요청
     @MessageMapping("/message")
-    public ResponseEntity<Void> receiveMessage(@RequestBody ChatMessage chat) {
+    public ResponseEntity<Void> receiveMessage(@RequestBody ChatMessage chatMessage) {
+        // 메시지를 데이터베이스에 저장
+        Chat savedChat = chatService.saveChatMessage(chatMessage);
+
         // 메시지를 해당 채팅방 구독자들에게 전송
-        template.convertAndSend("/sub/chatroom/1", chat);
+        template.convertAndSend("/sub/chatroom/" + chatMessage.getRoomId(), savedChat);
         return ResponseEntity.ok().build();
     }
+
+
+
+    //메세지 송신 및 수신
 }

@@ -2,18 +2,21 @@ package ac.su.ctctct.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ChatMessage {
+    private Long roomId;
+    private Long senderId;
+    private String senderNickname;
+    private String content;
 
-    private Long id;
-    private String name;
-    private String message;
-
-    public ChatMessage(Long id, String name, String message) {
-        this.id = id;
-        this.name = name;
-        this.message = message;
+    public ChatMessage(Long roomId, Long senderId, String senderNickname, String content) {
+        this.roomId = roomId;
+        this.senderId = senderId;
+        this.senderNickname = senderNickname;
+        this.content = content;
     }
 }

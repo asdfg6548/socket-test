@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "chat")
 @Getter @Setter
+@NoArgsConstructor
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +30,13 @@ public class Chat {
     private String content;
 
     private LocalDateTime timestamp;
+
+    public Chat(Room room, User sender, String content, LocalDateTime timestamp) {
+        this.room = room;
+        this.sender = sender;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
 
 }
 
