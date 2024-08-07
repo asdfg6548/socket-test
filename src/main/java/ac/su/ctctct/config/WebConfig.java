@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer { // WebMvcConfigurer 인터�
                     .allowedOrigins("http://localhost:3000") // http://localhost:3000에서 오는 요청을 허용
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD") // GET, POST, PUT, DELETE, HEAD 메서드를 허용
                     .allowedHeaders("*") // 모든 헤더를 허용
-                    .allowCredentials(true); // 자격 증명을 포함한 요청을 허용
+                    .allowCredentials(false); // 자격 증명을 포함한 요청을 허용
             }
         };
     }
